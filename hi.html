@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Easy Todo App</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      /* background: #ff7b7b; */
+       background: linear-gradient(45deg, #7bdaff, #11151b);
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      background: linear-gradient(to right, rgb(19, 12, 12), blue);
+  -webkit-background-clip: text;
+  color: transparent;
+    }
+
+    button {
+      background: #67cfdd;
+    }
+
+    input {
+    
+      padding: 8px;
+      width: 60%;
+    }
+
+    button:hover {
+      padding: 8px;
+      cursor: pointer;
+       background: linear-gradient(45deg, #7bdaff, #11151b);
+     
+      
+    }
+
+    ul {
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+      background: rgb(255, 237, 237);
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+   
+    
+  </style>
+</head>
+
+<body>
+
+  <h2><u>My Todo List</u></h2>
+
+  <input id="task" placeholder="Write task here">
+  <button onclick="addTask()">Add</button>
+
+  <ul id="list"></ul>
+
+  <script>
+    // load saved tasks when page opens
+    list.innerHTML = localStorage.getItem("todo") || "";
+
+    function addTask() {
+      var text = document.getElementById("task").value;
+      if (text === "") return;
+
+      var li = document.createElement("li");
+
+      // checkbox
+      var box = document.createElement("input");
+      box.type = "checkbox";
+      box.onclick = function () {
+        li.style.textDecoration = box.checked ? "line-through" : "none";
+        save();
+      };
+
+      // delete button
+      var del = document.createElement("button");
+      del.innerText = " 🗑️";
+      del.onclick = function () {
+        li.remove();
+        save();
+      };
+
+      li.appendChild(box);
+      li.append(" " + text);
+      li.appendChild(del);
+
+      document.getElementById("list").appendChild(li);
+      document.getElementById("task").value = "";
+
+      save();
+    }
+
+    function save() {
+      localStorage.setItem("todo", list.innerHTML);
+    }
+  </script>
+
+</body>
+</html>
+      save();
+    }
+
+    function save() {
+      localStorage.setItem("todo", list.innerHTML);
+    }
