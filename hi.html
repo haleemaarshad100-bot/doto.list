@@ -1,112 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Easy Todo App</title>
+<meta charset="UTF-8">
+<title>Todo App</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      /* background: #ff7b7b; */
-       background: linear-gradient(45deg, #7bdaff, #11151b);
-      padding: 20px;
-    }
+<style>
+  body{
+    font-family: Arial;
+    background: linear-gradient(45deg,#7bdaff,#11151b);
+    padding: 20px;
+  }
 
-    h2 {
-      text-align: center;
-      background: linear-gradient(to right, rgb(19, 12, 12), blue);
-  -webkit-background-clip: text;
-  color: transparent;
-    }
+  h2{
+    text-align: center;
+    background: linear-gradient(to right, black, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
 
-    button {
-      background: #67cfdd;
-    }
+  input{
+    padding: 8px;
+    width: 60%;
+  }
 
-    input {
-    
-      padding: 8px;
-      width: 60%;
-    }
+  button{
+    padding: 8px;
+    background: #67cfdd;
+    cursor: pointer;
+  }
 
-    button:hover {
-      padding: 8px;
-      cursor: pointer;
-       background: linear-gradient(45deg, #7bdaff, #11151b);
-     
-      
-    }
+  ul{ padding: 0; }
 
-    ul {
-      padding: 0;
-    }
-
-    li {
-      list-style: none;
-      background: rgb(255, 237, 237);
-      margin: 5px 0;
-      padding: 10px;
-      border-radius: 5px;
-    }
-   
-    
-  </style>
+  li{
+    list-style: none;
+    background: #ffecec;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+</style>
 </head>
 
 <body>
 
-  <h2><u>My Todo List</u></h2>
+<h2><u>My Todo List</u></h2>
 
-  <input id="task" placeholder="Write task here">
-  <button onclick="addTask()">Add</button>
+<input id="task" type="text" placeholder="Write task here">
+<button onclick="addTask()">Add</button>
 
-  <ul id="list"></ul>
+<ul id="list"></ul>
 
-  <script>
-    // load saved tasks when page opens
-    list.innerHTML = localStorage.getItem("todo") || "";
+<script>
+const task = document.getElementById("task");
+const list = document.getElementById("list");
 
-    function addTask() {
-      var text = document.getElementById("task").value;
-      if (text === "") return;
+// load saved todos
+list.innerHTML = localStorage.getItem("todo") || "";
 
-      var li = document.createElement("li");
+function addTask(){
+  if(task.value === "") return;
 
-      // checkbox
-      var box = document.createElement("input");
-      box.type = "checkbox";
-      box.onclick = function () {
-        li.style.textDecoration = box.checked ? "line-through" : "none";
-        save();
-      };
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <input type="checkbox"
+      onclick="this.parentElement.style.textDecoration=this.checked?'line-through':'none';save()">
+    ${task.value}
+    <button onclick="this.parentElement.remove();save()">🗑️</button>
+  `;
 
-      // delete button
-      var del = document.createElement("button");
-      del.innerText = " 🗑️";
-      del.onclick = function () {
-        li.remove();
-        save();
-      };
+  list.appendChild(li);
+  task.value = "";
+  save();
+}
 
-      li.appendChild(box);
-      li.append(" " + text);
-      li.appendChild(del);
-
-      document.getElementById("list").appendChild(li);
-      document.getElementById("task").value = "";
-
-      save();
-    }
-
-    function save() {
-      localStorage.setItem("todo", list.innerHTML);
-    }
-  </script>
+function save(){
+  localStorage.setItem("todo", list.innerHTML);
+}
+</script>
 
 </body>
 </html>
-      save();
-    }
-
-    function save() {
-      localStorage.setItem("todo", list.innerHTML);
-    }
